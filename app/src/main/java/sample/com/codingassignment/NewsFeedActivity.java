@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
  * View class which shows the list of news feed items
  */
 
-public class MainActivity extends AppCompatActivity implements NewsFeedContract.View{
+public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContract.View{
 
     private RecyclerView recyclerView;
     private NewsFeedAdapter mAdapter;
