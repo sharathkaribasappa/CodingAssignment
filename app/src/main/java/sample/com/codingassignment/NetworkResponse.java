@@ -7,7 +7,7 @@ import com.android.volley.VolleyError;
  */
 
 public interface NetworkResponse {
-    void onSuccessReponse(String response);
+    void onSuccessResponse(String response);
     void onErrorResponse(VolleyError error);
     void onNoNetwork();
 }

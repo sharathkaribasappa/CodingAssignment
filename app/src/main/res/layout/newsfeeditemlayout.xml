@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/paddingbottom"
+    android:paddingRight="@dimen/paddingright"
+    android:paddingTop="@dimen/paddingtop"
+    android:paddingBottom="@dimen/paddingbottom">
 
     <TextView
         android:id="@+id/rowtitle"
+        android:text="Transportation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textColor="@android:color/holo_blue_dark"/>
 
     <LinearLayout
         android:layout_below="@id/rowtitle"
@@ -20,6 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:layout_weight="0.6"
+            android:textSize="18dp"
             android:text="It is a well known fact that polar bears are the main mode of transportation in Canada. They consume far less gas and have the added benefit of being difficult to steal."/>
 
         <ImageView

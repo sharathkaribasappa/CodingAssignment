@@ -36,7 +36,7 @@ public class VolleyRequest {
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    responseCallBack.onSuccessReponse(response);
+                    responseCallBack.onSuccessResponse(response);
                 }
             },
             new Response.ErrorListener() {

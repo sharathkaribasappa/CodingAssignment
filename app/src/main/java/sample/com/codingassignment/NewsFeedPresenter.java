@@ -49,11 +49,22 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
     }
 
     @Override
-    public void onSuccessReponse(String response) {
+    public void onSuccessResponse(String response) {
         JSONParser jsonParser = new JSONParser();
 
         jsonParser.ParseJsonData(response);
-        mNewsFeedModelList = jsonParser.getParsedData();
+
+        List<JSONParser.ParsedData> parsedData = jsonParser.getParsedData();
+
+        for(int i = 0; i < parsedData.size(); i++) {
+            NewsFeedModel newsFeedModel = new NewsFeedModel();
+            newsFeedModel.setAppBarTitle(parsedData.get(i).appBarTitle);
+            newsFeedModel.setRowTitle(parsedData.get(i).rowTitle);
+            newsFeedModel.setRowDescription(parsedData.get(i).rowDescription);
+            newsFeedModel.setImagePath(parsedData.get(i).rowImagePath);
+
+            mNewsFeedModelList.add(newsFeedModel);
+        }
 
         mView.update();
     }
@@ -66,5 +77,9 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
     @Override
     public void onNoNetwork() {
 
+    }
+
+    public void cancelNetworkRequests() {
+        mVolleyRequest.cancelRequestQueue();
     }
 }

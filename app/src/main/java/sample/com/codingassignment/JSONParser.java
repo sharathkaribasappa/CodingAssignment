@@ -9,10 +9,12 @@ import java.util.List;
 
 /**
  * Created by sharathkaribasappa on 16/02/18.
+ *
+ * Class to parse JSON data
  */
 
 public class JSONParser {
-    private List<NewsFeedModel> mNewsFeedModelList = new ArrayList<>();
+    private List<ParsedData> mParsedData = new ArrayList<>();
 
     public void ParseJsonData(String response) {
         try {
@@ -22,24 +24,28 @@ public class JSONParser {
             JSONArray jsonArray = obj.getJSONArray("rows");
 
             for(int i = 0; i < jsonArray.length(); i++) {
-                String rowTitle = jsonArray.getJSONObject(i).getString("title");
-                String rowDescription = jsonArray.getJSONObject(i).getString("description");
-                String rowImagePath = jsonArray.getJSONObject(i).getString("imageHref");
+                ParsedData parsedData = new ParsedData();
+                parsedData.appBarTitle = appBarTitle;
 
-                NewsFeedModel newsFeedModel = new NewsFeedModel();
-                newsFeedModel.setAppBarTitle(appBarTitle);
-                newsFeedModel.setRowTitle(rowTitle);
-                newsFeedModel.setRowDescription(rowDescription);
-                newsFeedModel.setImagePath(rowImagePath);
+                parsedData.rowTitle = jsonArray.getJSONObject(i).getString("title");
+                parsedData.rowDescription = jsonArray.getJSONObject(i).getString("description");
+                parsedData.rowImagePath = jsonArray.getJSONObject(i).getString("imageHref");
 
-                mNewsFeedModelList.add(newsFeedModel);
+                mParsedData.add(parsedData);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public List<NewsFeedModel> getParsedData() {
-        return mNewsFeedModelList;
+    class ParsedData {
+        String appBarTitle;
+        String rowTitle;
+        String rowDescription;
+        String rowImagePath;
+    }
+
+    public List<ParsedData> getParsedData() {
+        return mParsedData;
     }
 }

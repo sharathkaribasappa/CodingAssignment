@@ -3,6 +3,7 @@ package sample.com.codingassignment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NewsFeedContract.
         recyclerView = findViewById(R.id.recycler_view);
         mAdapter = new NewsFeedAdapter(mNewsFeedPresenter, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
@@ -74,5 +76,11 @@ public class MainActivity extends AppCompatActivity implements NewsFeedContract.
     public void update() {
         setTitle(mNewsFeedPresenter.getAppBarTitle());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mNewsFeedPresenter.cancelNetworkRequests();
     }
 }

@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="paddingleft">10dp</dimen>
+    <dimen name="paddingright">10dp</dimen>
+    <dimen name="paddingtop">10dp</dimen>
+    <dimen name="paddingbottom">10dp</dimen>
+</resources>
