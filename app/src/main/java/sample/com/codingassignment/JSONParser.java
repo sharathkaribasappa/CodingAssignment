@@ -16,6 +16,11 @@ import java.util.List;
 public class JSONParser {
     private List<ParsedData> mParsedData = new ArrayList<>();
 
+    /**
+     * Method which parses the json response
+     * uses standard org.json java library to parse the data
+     * @param response
+     */
     public void ParseJsonData(String response) {
         try {
             JSONObject obj = new JSONObject(response);
@@ -38,6 +43,9 @@ public class JSONParser {
         }
     }
 
+    /**
+     * simple data structure class used to hold parsed data
+     */
     class ParsedData {
         String appBarTitle;
         String rowTitle;

@@ -10,6 +10,7 @@ public interface NewsFeedContract {
     /** Represents the View in MVP. */
     interface View {
         void update();
+        void showMessage(String message);
     }
 
     /** Represents the list item view in the news feed list*/

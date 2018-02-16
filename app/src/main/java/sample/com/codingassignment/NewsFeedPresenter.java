@@ -1,8 +1,6 @@
 package sample.com.codingassignment;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
@@ -42,13 +40,19 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
     }
 
     @Override
+    /**
+     * method to request a network call
+     */
     public void fetchNewsFeed() {
-        //perform network request to get the json
+        //perform network request to get the json data
         mVolleyRequest.performNetworkRequest(URL,this);
-
     }
 
     @Override
+    /**
+     * got a success response for the network call made
+     * parse the json data and update the model class
+     */
     public void onSuccessResponse(String response) {
         JSONParser jsonParser = new JSONParser();
 
@@ -70,15 +74,26 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
     }
 
     @Override
+    /**
+     * got an error response for the network call made
+     * tell the user network error and try again by tapping the refresh button
+     */
     public void onErrorResponse(VolleyError error) {
-
+        mView.showMessage("Network Error, please try again");
     }
 
     @Override
+    /**
+     * no network available to perform network call
+     * tell the user to connect to the mobile data/wife and try again
+     */
     public void onNoNetwork() {
-
+        mView.showMessage("Device is offline");
     }
 
+    /**
+     * method to stop all the network requests which are in queue
+     */
     public void cancelNetworkRequests() {
         mVolleyRequest.cancelRequestQueue();
     }

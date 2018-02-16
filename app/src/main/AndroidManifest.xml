@@ -5,6 +5,9 @@
     <!-- Internet permission required to perform network calls-->
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- Permission required to known if phone is connected to network (wifi/mobile data)-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

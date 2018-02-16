@@ -8,16 +8,11 @@ package sample.com.codingassignment;
 
 public class NewsFeedModel {
     private String AppBarTitle;
-
     private String rowTitle;
-
     private String rowDescription;
-
     private String imagePath;
 
-    public NewsFeedModel() {
-
-    }
+    public NewsFeedModel() {}
 
     public String getAppBarTitle() {
         return AppBarTitle;
