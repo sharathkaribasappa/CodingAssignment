@@ -28,15 +28,18 @@ public class MainActivity extends AppCompatActivity implements NewsFeedContract.
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
 
+        //Initializing the presenter class
+        mNewsFeedPresenter = new NewsFeedPresenter(this, getApplicationContext());
+
         //initialization of recycler view
         recyclerView = findViewById(R.id.recycler_view);
-        mNewsFeedPresenter = new NewsFeedPresenter(this);
-        mAdapter = new NewsFeedAdapter(mNewsFeedPresenter);
-
+        mAdapter = new NewsFeedAdapter(mNewsFeedPresenter, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+        mNewsFeedPresenter.fetchNewsFeed();
     }
 
     @Override
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NewsFeedContract.
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 // User clicked the "refresh" button, fetch the data from server and update the UI with new data
+                mNewsFeedPresenter.fetchNewsFeed();
                 return true;
 
             default:
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NewsFeedContract.
      * callback from Presenter class to update the UI once json data is ready
      */
     public void update() {
-        mAdapter.notifyDataSetChanged();
         setTitle(mNewsFeedPresenter.getAppBarTitle());
+        mAdapter.notifyDataSetChanged();
     }
 }

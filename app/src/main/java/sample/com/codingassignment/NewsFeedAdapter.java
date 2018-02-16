@@ -1,11 +1,14 @@
 package sample.com.codingassignment;
 
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 /**
  * Created by sharathkaribasappa on 16/02/18.
@@ -16,9 +19,11 @@ import android.widget.TextView;
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyViewHolder> {
 
     private NewsFeedPresenter newsFeedPresenter;
+    private AppCompatActivity myActivity;
 
-    public NewsFeedAdapter(NewsFeedPresenter newsFeedPresenter) {
+    public NewsFeedAdapter(NewsFeedPresenter newsFeedPresenter, AppCompatActivity activity) {
         this.newsFeedPresenter = newsFeedPresenter;
+        myActivity = activity;
     }
 
     /**
@@ -48,7 +53,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
 
         @Override
         public void setRowImage(String path) {
-
+            Glide.with(myActivity).load(path).into(imageView);
         }
     }
 
