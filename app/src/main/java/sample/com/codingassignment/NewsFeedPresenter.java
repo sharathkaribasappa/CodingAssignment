@@ -12,7 +12,6 @@ import java.util.List;
  * Presenter class which handles the json data, parsing and interacting with model and view class
  */
 public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResponse {
-    private static final String URL = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json";
 
     private List<NewsFeedModel> mNewsFeedModelList = new ArrayList<>();
     private NewsFeedContract.View mView;
@@ -43,9 +42,9 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
     /**
      * method to request a network call
      */
-    public void fetchNewsFeed() {
+    public void fetchNewsFeed(String url) {
         //perform network request to get the json data
-        mVolleyRequest.performNetworkRequest(URL,this);
+        mVolleyRequest.performNetworkRequest(url,this);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
      * tell the user network error and try again by tapping the refresh button
      */
     public void onErrorResponse(VolleyError error) {
-        mView.showMessage("Network Error, please try again");
+        mView.showMessage("Network Error, " + error.getMessage() + ", please try again");
     }
 
     @Override

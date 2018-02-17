@@ -1,14 +1,15 @@
 package sample.com.codingassignment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
@@ -19,13 +20,14 @@ import android.widget.RelativeLayout;
  * View class which shows the list of news feed items
  */
 
-public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContract.View{
+public class NewsFeedActivity extends Activity implements NewsFeedContract.View{
 
     private RecyclerView recyclerView;
     private NewsFeedAdapter mAdapter;
     private NewsFeedPresenter mNewsFeedPresenter;
     private RelativeLayout relativeLayout;
     private ProgressDialog progress;
+    private int mState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,8 @@ public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContr
         setContentView(R.layout.activity_main);
 
         relativeLayout = findViewById(R.id.relativelayout);
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+
+        setActionBar((Toolbar) findViewById(R.id.my_toolbar));
 
         //Initializing the presenter class
         mNewsFeedPresenter = new NewsFeedPresenter(this, getApplicationContext());
@@ -46,10 +49,23 @@ public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContr
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        fetchNewsData(Constants.URL);
+    }
+
+    /**
+     * method to show progress dialog and network request to presenter
+     * @param url
+     */
+    public void fetchNewsData(String url) {
         progress = new ProgressDialog(this);
         showProgressBar(true);
-        mNewsFeedPresenter.fetchNewsFeed();
+        mNewsFeedPresenter.fetchNewsFeed(url);
     }
 
     @Override
@@ -67,7 +83,7 @@ public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContr
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 // User clicked the "refresh" button, fetch the data from server and update the UI with new data
-                mNewsFeedPresenter.fetchNewsFeed();
+                fetchNewsData(Constants.URL);
                 return true;
 
             default:
@@ -82,15 +98,10 @@ public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContr
      * callback from Presenter class to update the UI once json data is ready
      */
     public void update() {
+        mState = 1;
         showProgressBar(false);
         setTitle(mNewsFeedPresenter.getAppBarTitle());
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mNewsFeedPresenter.cancelNetworkRequests();
     }
 
     @Override
@@ -99,7 +110,7 @@ public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContr
      */
     public void showMessage(String message) {
         showProgressBar(false);
-
+        mState = 2;
         Snackbar snackbar = Snackbar
                 .make(relativeLayout, message, Snackbar.LENGTH_LONG);
 
@@ -115,5 +126,16 @@ public class NewsFeedActivity extends AppCompatActivity implements NewsFeedContr
         } else {
             progress.cancel();
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mNewsFeedPresenter.cancelNetworkRequests();
+    }
+
+    @VisibleForTesting
+    public int getState() {
+        return mState;
     }
 }

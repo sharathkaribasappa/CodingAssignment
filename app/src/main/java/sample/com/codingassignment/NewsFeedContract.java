@@ -22,6 +22,6 @@ public interface NewsFeedContract {
 
     /** Represents the Presenter in MVP. */
     interface Presenter {
-        void fetchNewsFeed();
+        void fetchNewsFeed(String url);
     }
 }

@@ -1,6 +1,6 @@
 package sample.com.codingassignment;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +19,9 @@ import com.bumptech.glide.Glide;
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyViewHolder> {
 
     private NewsFeedPresenter newsFeedPresenter;
-    private AppCompatActivity myActivity;
+    private Activity myActivity;
 
-    public NewsFeedAdapter(NewsFeedPresenter newsFeedPresenter, AppCompatActivity activity) {
+    public NewsFeedAdapter(NewsFeedPresenter newsFeedPresenter, Activity activity) {
         this.newsFeedPresenter = newsFeedPresenter;
         myActivity = activity;
     }

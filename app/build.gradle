@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "sample.com.codingassignment"
         minSdkVersion 25
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,4 +40,7 @@ dependencies {
 
     //material design support
     compile 'com.android.support:design:26.1.0'
+
+    // Robolectric
+    testCompile "org.robolectric:robolectric:3.6"
 }
