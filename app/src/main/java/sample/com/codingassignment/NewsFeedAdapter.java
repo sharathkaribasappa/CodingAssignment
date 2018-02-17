@@ -53,7 +53,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
 
         @Override
         public void setRowImage(String path) {
-            Glide.with(myActivity).load(path).into(imageView);
+            Glide.with(myActivity)
+                    .load(path)
+                    .into(imageView);
         }
     }
 

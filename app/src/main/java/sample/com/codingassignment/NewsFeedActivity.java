@@ -2,6 +2,7 @@ package sample.com.codingassignment;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ public class NewsFeedActivity extends Activity implements NewsFeedContract.View{
 
         relativeLayout = findViewById(R.id.relativelayout);
 
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
         setActionBar((Toolbar) findViewById(R.id.my_toolbar));
 
         //Initializing the presenter class
@@ -49,6 +52,9 @@ public class NewsFeedActivity extends Activity implements NewsFeedContract.View{
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+        //initialize progress dialog
+        progress = new ProgressDialog(this);
     }
 
     @Override
@@ -63,7 +69,6 @@ public class NewsFeedActivity extends Activity implements NewsFeedContract.View{
      * @param url
      */
     public void fetchNewsData(String url) {
-        progress = new ProgressDialog(this);
         showProgressBar(true);
         mNewsFeedPresenter.fetchNewsFeed(url);
     }
@@ -101,6 +106,7 @@ public class NewsFeedActivity extends Activity implements NewsFeedContract.View{
         mState = 1;
         showProgressBar(false);
         setTitle(mNewsFeedPresenter.getAppBarTitle());
+
         mAdapter.notifyDataSetChanged();
     }
 

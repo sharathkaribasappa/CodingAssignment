@@ -1,5 +1,7 @@
 package sample.com.codingassignment;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +16,7 @@ import java.util.List;
  */
 
 public class JSONParser {
+    private static final String TAG = "JSONParser";
     private List<ParsedData> mParsedData = new ArrayList<>();
 
     /**
@@ -21,13 +24,14 @@ public class JSONParser {
      * uses standard org.json java library to parse the data
      * @param response
      */
-    public void ParseJsonData(String response) {
+    public boolean parseJsonData(String response) {
         try {
             JSONObject obj = new JSONObject(response);
             String appBarTitle = obj.getString("title");
 
             JSONArray jsonArray = obj.getJSONArray("rows");
 
+            mParsedData.clear();
             for(int i = 0; i < jsonArray.length(); i++) {
                 ParsedData parsedData = new ParsedData();
                 parsedData.appBarTitle = appBarTitle;
@@ -36,10 +40,25 @@ public class JSONParser {
                 parsedData.rowDescription = jsonArray.getJSONObject(i).getString("description");
                 parsedData.rowImagePath = jsonArray.getJSONObject(i).getString("imageHref");
 
-                mParsedData.add(parsedData);
+                if(parsedData.rowTitle.equals("null")) {
+                    parsedData.rowTitle = "";
+                }
+
+                if(parsedData.rowDescription.equals("null")) {
+                    parsedData.rowDescription = "";
+                }
+
+                if(parsedData.rowTitle.isEmpty() || parsedData.rowDescription.isEmpty()) {
+                    //don't add empty data to list
+                } else {
+                    mParsedData.add(parsedData);
+                }
             }
+
+            return true;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG,"json parsing exception");
+            return false;
         }
     }
 

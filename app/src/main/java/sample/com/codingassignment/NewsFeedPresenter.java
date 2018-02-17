@@ -55,10 +55,12 @@ public class NewsFeedPresenter implements NewsFeedContract.Presenter,NetworkResp
     public void onSuccessResponse(String response) {
         JSONParser jsonParser = new JSONParser();
 
-        jsonParser.ParseJsonData(response);
+        jsonParser.parseJsonData(response);
 
         List<JSONParser.ParsedData> parsedData = jsonParser.getParsedData();
 
+        //clear the list before updating with new one
+        mNewsFeedModelList.clear();
         for(int i = 0; i < parsedData.size(); i++) {
             NewsFeedModel newsFeedModel = new NewsFeedModel();
             newsFeedModel.setAppBarTitle(parsedData.get(i).appBarTitle);

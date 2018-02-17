@@ -25,34 +25,19 @@ public class NewsFeedActivityTest {
 
     @Test
     /**
-     * Test for success scenario
+     * Test for success scenario/error scenario
      */
     public void Test1() {
         Assert.assertNotNull(activity);
         //passing the correct url to download the json data
         activity.fetchNewsData(Constants.URL);
-
         Assert.assertTrue(activity.getState() == 1);
-    }
 
-    @Test
-    /**
-     * Test for error scenario
-     */
-    public void Test2() {
-        Assert.assertNotNull(activity);
         //passing error as url to test the error scenario
         //here UI can show old data if it is there in the cache else a blank screen
         activity.fetchNewsData("error");
         Assert.assertTrue(activity.getState() == 2);
-    }
 
-    @Test
-    /**
-     * Test for noNetwork scenario
-     */
-    public void Test3() {
-        Assert.assertNotNull(activity);
         //passing noNetwork as url to test the no Network scenario
         //here UI can show old data if it is there in the cache or else a blank screen
         activity.fetchNewsData("noNetwork");
